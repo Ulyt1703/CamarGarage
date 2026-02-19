@@ -128,7 +128,7 @@ body {
 }
 
 .btn-book-now {
-    background-color: #FFFFFF !important; 
+    background-color: #FFFFFF !important;
     color: #000000 !important;
     border: 2px solid #FFFFFF !important;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
@@ -169,7 +169,7 @@ body {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     .contact-card {
         padding: 40px 20px;
     }

@@ -146,14 +146,14 @@
 
         async function loadData() {
             try {
-                const res = await fetch(`https://api.github.com/gists/${API_CONFIG.GIST_ID}`, {
+                let res = await fetch(`https://api.github.com/gists/${API_CONFIG.GIST_ID}`, {
                     headers: { 'Authorization': `token ${API_CONFIG.TOKEN}` }
                 });
                 if (!res.ok) throw new Error("GitHub connect error");
                 
-                const data = await res.json();
-                const rawUrl = data.files['projects.json'].raw_url;
-                const rawRes = await fetch(rawUrl);
+                let data = await res.json();
+                let rawUrl = data.files['projects.json'].raw_url;
+                let rawRes = await fetch(rawUrl);
                 projectsData = await rawRes.json();
                 
                 renderList();
@@ -165,8 +165,8 @@
         }
 
         async function saveData() {
-            const btn = document.getElementById('addBtn');
-            const loader = document.getElementById('loader');
+            let btn = document.getElementById('addBtn');
+            let loader = document.getElementById('loader');
             
             try {
                 await fetch(`https://api.github.com/gists/${API_CONFIG.GIST_ID}`, {
@@ -194,11 +194,11 @@
         }
 
         async function uploadMediaToCloudinary(file) {
-            const formData = new FormData();
+            let formData = new FormData();
             formData.append('file', file);
             formData.append('upload_preset', CLOUDINARY_PRESET);
 
-            const res = await fetch(CLOUDINARY_URL, {
+            let res = await fetch(CLOUDINARY_URL, {
                 method: 'POST',
                 body: formData
             });
@@ -207,21 +207,21 @@
                 throw new Error("Fout bij uploaden media naar server.");
             }
 
-            const data = await res.json();
+            let data = await res.json();
             return data.secure_url; // Це і є готове пряме посилання на відео/фото
         }
 
         async function showPreview() {
-            const fileInput = document.getElementById('p-file');
-            const name = document.getElementById('p-name').value || "Project Naam";
-            const cat = document.getElementById('p-cat').value;
-            const desc = document.getElementById('p-desc').value || "Beschrijving...";
+            let fileInput = document.getElementById('p-file');
+            let name = document.getElementById('p-name').value || "Project Naam";
+            let cat = document.getElementById('p-cat').value;
+            let desc = document.getElementById('p-desc').value || "Beschrijving...";
             
             let mediaHTML = '';
 
             if (fileInput.files.length > 0) {
-                const file = fileInput.files[0];
-                const tempUrl = URL.createObjectURL(file); 
+                let file = fileInput.files[0];
+                let tempUrl = URL.createObjectURL(file); 
                 
                 if (file.type.startsWith('video/')) {
                     mediaHTML = `<video class="project-video" src="${tempUrl}" autoplay loop muted playsinline></video>`;
@@ -249,16 +249,16 @@
         }
 
         async function addItem() {
-            const fileInput = document.getElementById('p-file');
-            const name = document.getElementById('p-name').value;
-            const cat = document.getElementById('p-cat').value;
-            const desc = document.getElementById('p-desc').value;
+            let fileInput = document.getElementById('p-file');
+            let name = document.getElementById('p-name').value;
+            let cat = document.getElementById('p-cat').value;
+            let desc = document.getElementById('p-desc').value;
 
             if(!name || !desc || fileInput.files.length === 0) return alert("Vul alle velden in en kies een bestand!");
 
-            const file = fileInput.files[0];
-            const btn = document.getElementById('addBtn');
-            const loader = document.getElementById('loader');
+            let file = fileInput.files[0];
+            let btn = document.getElementById('addBtn');
+            let loader = document.getElementById('loader');
 
             btn.disabled = true;
             
@@ -270,9 +270,9 @@
                 }
                 loader.style.display = 'block';
 
-                const finalMediaUrl = await uploadMediaToCloudinary(file);
+                let finalMediaUrl = await uploadMediaToCloudinary(file);
 
-                const newItem = {
+                let newItem = {
                     id: Date.now(),
                     name: name,
                     category: cat,
@@ -293,7 +293,7 @@
         }
 
         function renderList() {
-            const list = document.getElementById('project-list');
+            let list = document.getElementById('project-list');
             list.innerHTML = '';
             if (!projectsData || projectsData.length === 0) { 
                 list.innerHTML = '<p style="text-align:center;color:#666">Nog geen projecten.</p>'; 
@@ -301,9 +301,9 @@
             }
 
             projectsData.forEach((p, index) => {
-                const isVideo = p.image && p.image.match(/\.(mp4|webm|mov|mkv)$/i);
+                let isVideo = p.image && p.image.match(/\.(mp4|webm|mov|mkv)$/i);
                 
-                const thumbHtml = isVideo 
+                let thumbHtml = isVideo 
                     ? `<div class="thumb thumb-video">▶</div>` 
                     : `<img src="${p.image}" class="thumb">`;
 

@@ -33,9 +33,9 @@ const carDatabase = {
     "Nissan": ["Micra", "Juke", "Qashqai", "X-Trail", "Ariya", "Leaf", "GT-R"],
     "Suzuki": ["Swift", "Ignis", "Vitara", "S-Cross", "Swace", "Across"],
     "RAM": ["1500", "2500", "TRX"]
-};
+}
 
-const allBrandsList = Object.keys(carDatabase).sort();
+const allBrandsList = Object.keys(carDatabase).sort()
 
 const serviceOptionsDB = {
     'ambient': { title: "Ambient Light" },
@@ -49,7 +49,7 @@ const serviceOptionsDB = {
     'calipers': { title: "Brake Calipers" },
     'steering': { title: "Steering Wheels" },
     'parts': { title: "Parts Installation" }
-};
+}
 
 let bookingData = {
     step: 1,
@@ -59,334 +59,334 @@ let bookingData = {
     customerType: 'private',
     customer: {},
     totalPrice: 0
-};
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-    initSearchDropdown();
-    setupInputMasks();
+    initSearchDropdown()
+    setupInputMasks()
 
     document.addEventListener('click', function(e) {
         if(!e.target.closest('.input-container')) {
-            document.querySelectorAll('.config-dropdown').forEach(d => d.classList.remove('show'));
+            document.querySelectorAll('.config-dropdown').forEach(d => d.classList.remove('show'))
         }
-    });
-});
+    })
+})
 
 
 
 function selectBrand(brandName, element) {
-    document.querySelectorAll('.brand-pill').forEach(b => b.classList.remove('active'));
-    if(element) element.classList.add('active');
+    document.querySelectorAll('.brand-pill').forEach(b => b.classList.remove('active'))
+    if(element) element.classList.add('active')
     
-    const searchInput = document.getElementById('brand-search');
-    searchInput.value = brandName;
-    document.getElementById('car-brand').value = brandName;
+    let searchInput = document.getElementById('brand-search')
+    searchInput.value = brandName
+    document.getElementById('car-brand').value = brandName
     
-    document.getElementById('brand-dropdown').classList.remove('show');
-    resetModelStep();
-    loadModelsForBrand(brandName);
+    document.getElementById('brand-dropdown').classList.remove('show')
+    resetModelStep()
+    loadModelsForBrand(brandName)
 }
 
 function initSearchDropdown() {
-    const dropdown = document.getElementById('brand-dropdown');
-    if(!dropdown) return;
-    dropdown.innerHTML = '';
+    let dropdown = document.getElementById('brand-dropdown')
+    if(!dropdown) return
+    dropdown.innerHTML = ''
     
     allBrandsList.forEach(brand => {
-        const div = document.createElement('div');
-        div.className = 'config-item';
-        div.innerText = brand;
-        div.onclick = () => selectBrand(brand, null);
-        dropdown.appendChild(div);
-    });
+        let div = document.createElement('div')
+        div.className = 'config-item'
+        div.innerText = brand
+        div.onclick = () => selectBrand(brand, null)
+        dropdown.appendChild(div)
+    })
 }
 
 function showBrandList() {
-    const dropdown = document.getElementById('brand-dropdown');
-    const input = document.getElementById('brand-search');
+    let dropdown = document.getElementById('brand-dropdown')
+    let input = document.getElementById('brand-search')
     if(input.value.trim() === "") {
-        dropdown.querySelectorAll('.config-item').forEach(item => item.style.display = "");
+        dropdown.querySelectorAll('.config-item').forEach(item => item.style.display = "")
     }
-    dropdown.classList.add('show');
+    dropdown.classList.add('show')
 }
 
 function filterBrandList(input) {
-    const filter = input.value.toUpperCase();
-    const dropdown = document.getElementById('brand-dropdown');
-    if(!dropdown.classList.contains('show')) showBrandList();
+    let filter = input.value.toUpperCase()
+    let dropdown = document.getElementById('brand-dropdown')
+    if(!dropdown.classList.contains('show')) showBrandList()
     
-    const items = dropdown.querySelectorAll('.config-item');
+    let items = dropdown.querySelectorAll('.config-item')
     items.forEach(item => {
-        item.style.display = item.innerText.toUpperCase().includes(filter) ? "" : "none";
-    });
-    document.getElementById('car-brand').value = input.value;
+        item.style.display = item.innerText.toUpperCase().includes(filter) ? "" : "none"
+    })
+    document.getElementById('car-brand').value = input.value
 }
 
 function loadModelsForBrand(brand) {
-    const modelSection = document.getElementById('section-model');
-    const modelInput = document.getElementById('model-search');
-    const icon = document.getElementById('model-icon');
+    let modelSection = document.getElementById('section-model')
+    let modelInput = document.getElementById('model-search')
+    let icon = document.getElementById('model-icon')
     
-    modelSection.classList.remove('disabled');
-    modelInput.disabled = false;
-    modelInput.value = '';
+    modelSection.classList.remove('disabled')
+    modelInput.disabled = false
+    modelInput.value = ''
     
-    let models = carDatabase[brand];
+    let models = carDatabase[brand]
     if (!models) {
-        const key = Object.keys(carDatabase).find(k => k.toUpperCase() === brand.toUpperCase());
-        if (key) models = carDatabase[key];
+        let key = Object.keys(carDatabase).find(k => k.toUpperCase() === brand.toUpperCase())
+        if (key) models = carDatabase[key]
     }
 
-    const dropdown = document.getElementById('model-dropdown');
-    dropdown.innerHTML = '';
+    let dropdown = document.getElementById('model-dropdown')
+    dropdown.innerHTML = ''
 
     if (models && models.length > 0) {
-        modelInput.placeholder = "Selecteer Model";
-        icon.innerText = "🚗";
+        modelInput.placeholder = "Selecteer Model"
+        icon.innerText = "🚗"
         models.forEach(model => {
-            const div = document.createElement('div');
-            div.className = 'config-item';
-            div.innerText = model;
-            div.onclick = () => selectModel(model);
-            dropdown.appendChild(div);
-        });
-        modelInput.dataset.list = JSON.stringify(models);
-        if(document.activeElement === modelInput) showModelList();
+            let div = document.createElement('div')
+            div.className = 'config-item'
+            div.innerText = model
+            div.onclick = () => selectModel(model)
+            dropdown.appendChild(div)
+        })
+        modelInput.dataset.list = JSON.stringify(models)
+        if(document.activeElement === modelInput) showModelList()
     } else {
-        modelInput.placeholder = "Typ model handmatig...";
-        icon.innerText = "✍️";
-        modelInput.dataset.list = "[]";
+        modelInput.placeholder = "Typ model handmatig..."
+        icon.innerText = "✍️"
+        modelInput.dataset.list = "[]"
     }
 }
 
 function showModelList() {
-    const input = document.getElementById('model-search');
-    const dropdown = document.getElementById('model-dropdown');
+    let input = document.getElementById('model-search')
+    let dropdown = document.getElementById('model-dropdown')
     
-    if (!input.dataset.list) return;
-    const models = JSON.parse(input.dataset.list);
-    if(models.length === 0) return;
+    if (!input.dataset.list) return
+    let models = JSON.parse(input.dataset.list)
+    if(models.length === 0) return
 
     if(input.value.trim() === "") {
-        dropdown.querySelectorAll('.config-item').forEach(item => item.style.display = "");
+        dropdown.querySelectorAll('.config-item').forEach(item => item.style.display = "")
     } else {
-        filterModelList(input);
-        return; 
+        filterModelList(input)
+        return 
     }
-    dropdown.classList.add('show');
+    dropdown.classList.add('show')
 }
 
 function selectModel(modelName) {
-    document.getElementById('model-search').value = modelName;
-    document.getElementById('car-model').value = modelName;
-    document.getElementById('model-dropdown').classList.remove('show');
-    initYearConfigurator();
+    document.getElementById('model-search').value = modelName
+    document.getElementById('car-model').value = modelName
+    document.getElementById('model-dropdown').classList.remove('show')
+    initYearConfigurator()
 }
 
 function filterModelList(input) {
-    const filter = input.value.toUpperCase();
-    const dropdown = document.getElementById('model-dropdown');
-    document.getElementById('car-model').value = input.value;
+    let filter = input.value.toUpperCase()
+    let dropdown = document.getElementById('model-dropdown')
+    document.getElementById('car-model').value = input.value
 
-    if (!input.dataset.list) return;
-    const models = JSON.parse(input.dataset.list);
-    if(models.length === 0) return;
+    if (!input.dataset.list) return
+    const models = JSON.parse(input.dataset.list)
+    if(models.length === 0) return
 
-    dropdown.innerHTML = '';
-    const filtered = models.filter(m => m.toUpperCase().includes(filter));
+    dropdown.innerHTML = ''
+    let filtered = models.filter(m => m.toUpperCase().includes(filter))
     
     if(filtered.length > 0) {
-        dropdown.classList.add('show');
+        dropdown.classList.add('show')
         filtered.forEach(model => {
-            const div = document.createElement('div');
-            div.className = 'config-item';
-            div.innerText = model;
-            div.onclick = () => selectModel(model);
-            dropdown.appendChild(div);
-        });
+            let div = document.createElement('div')
+            div.className = 'config-item'
+            div.innerText = model
+            div.onclick = () => selectModel(model)
+            dropdown.appendChild(div)
+        })
     } else {
-        dropdown.classList.remove('show');
+        dropdown.classList.remove('show')
     }
 }
 
 function initYearConfigurator() {
-    const yearSection = document.getElementById('section-year');
-    const yearGrid = document.getElementById('year-grid');
-    yearSection.classList.remove('disabled');
-    yearGrid.innerHTML = '';
+    let yearSection = document.getElementById('section-year')
+    let yearGrid = document.getElementById('year-grid')
+    yearSection.classList.remove('disabled')
+    yearGrid.innerHTML = ''
     
     for(let y = 2026; y >= 1990; y--) {
-        const div = document.createElement('div');
-        div.className = 'year-btn';
-        div.innerText = y;
+        let div = document.createElement('div')
+        div.className = 'year-btn'
+        div.innerText = y
         div.onclick = function() {
-            document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            document.getElementById('car-year').value = y;
-            bookingData.car.year = y; 
-        };
-        yearGrid.appendChild(div);
+            document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'))
+            this.classList.add('active')
+            document.getElementById('car-year').value = y
+            bookingData.car.year = y 
+        }
+        yearGrid.appendChild(div)
     }
 }
 
 function resetModelStep() {
-    document.getElementById('section-model').classList.add('disabled');
-    document.getElementById('section-year').classList.add('disabled');
-    document.getElementById('model-search').value = '';
-    document.getElementById('model-search').disabled = true;
-    document.getElementById('car-model').value = '';
-    document.getElementById('car-year').value = '';
-    document.getElementById('model-icon').innerText = '🚗';
-    document.getElementById('model-search').dataset.list = "[]";
-    document.getElementById('model-dropdown').innerHTML = "";
+    document.getElementById('section-model').classList.add('disabled')
+    document.getElementById('section-year').classList.add('disabled')
+    document.getElementById('model-search').value = ''
+    document.getElementById('model-search').disabled = true
+    document.getElementById('car-model').value = ''
+    document.getElementById('car-year').value = ''
+    document.getElementById('model-icon').innerText = '🚗'
+    document.getElementById('model-search').dataset.list = "[]"
+    document.getElementById('model-dropdown').innerHTML = ""
 }
 
 
 window.toggleService = function(card) {
-    card.classList.toggle('selected');
-    const val = card.dataset.value;
-    if(card.classList.contains('selected')) bookingData.selectedServices.push(val);
-    else bookingData.selectedServices = bookingData.selectedServices.filter(s => s !== val);
-};
+    card.classList.toggle('selected')
+    let val = card.dataset.value
+    if(card.classList.contains('selected')) bookingData.selectedServices.push(val)
+    else bookingData.selectedServices = bookingData.selectedServices.filter(s => s !== val)
+}
 
 function renderDynamicOptions() {
-    const wrapper = document.getElementById('dynamic-options-container');
-    wrapper.innerHTML = '';
+    let wrapper = document.getElementById('dynamic-options-container')
+    wrapper.innerHTML = ''
     
     bookingData.selectedServices.forEach(srvId => {
-        const data = serviceOptionsDB[srvId];
-        const html = `
-            <div class="dynamic-service-block" style="padding: 20px; display:flex; align-items:center;">
-                <div class="dynamic-service-title" style="margin:0; font-size:16px;">${data.title}</div>
-            </div>`;
-        wrapper.innerHTML += html;
-    });
+        let data = serviceOptionsDB[srvId]
+        let html = `
+            <div class="dynamic-service-block" style="padding: 20px display:flex align-items:center">
+                <div class="dynamic-service-title" style="margin:0 font-size:16px">${data.title}</div>
+            </div>`
+        wrapper.innerHTML += html
+    })
     
-    document.getElementById('total-price-display').innerText = "Op aanvraag";
+    document.getElementById('total-price-display').innerText = "Op aanvraag"
 }
 
 window.calcTotal = function() {
 
-};
+}
 
 window.nextStep = function(step) {
     if(step === 1) {
-        const brand = document.getElementById('car-brand').value;
-        const model = document.getElementById('car-model').value;
-        const year = document.getElementById('car-year').value;
+        let brand = document.getElementById('car-brand').value
+        let model = document.getElementById('car-model').value
+        let year = document.getElementById('car-year').value
         
-        if(!brand) return alert('Kies eerst een merk.');
-        if(!model) return alert('Kies of typ een model.');
+        if(!brand) return alert('Kies eerst een merk.')
+        if(!model) return alert('Kies of typ een model.')
         
-        bookingData.car.brand = brand;
-        bookingData.car.model = model;
-        if(year) bookingData.car.year = year;
+        bookingData.car.brand = brand
+        bookingData.car.model = model
+        if(year) bookingData.car.year = year
     }
 
-    if(step === 2 && bookingData.selectedServices.length === 0) return alert('Kies minstens één dienst.');
+    if(step === 2 && bookingData.selectedServices.length === 0) return alert('Kies minstens één dienst.')
     
-    if(step === 2) renderDynamicOptions();
+    if(step === 2) renderDynamicOptions()
     
     if(step === 4) {
-        if(!validateContactForm()) return;
-        generateReview();
+        if(!validateContactForm()) return
+        generateReview()
     }
 
     if(step < 5) {
-        document.getElementById(`step-${step}`).classList.remove('active');
-        document.getElementById(`step-${step+1}`).classList.add('active');
-        updateProgress(step + 1);
-        window.scrollTo(0,0);
+        document.getElementById(`step-${step}`).classList.remove('active')
+        document.getElementById(`step-${step+1}`).classList.add('active')
+        updateProgress(step + 1)
+        window.scrollTo(0,0)
     }
-};
+}
 
 window.prevStep = function(step) {
-    document.getElementById(`step-${step}`).classList.remove('active');
-    document.getElementById(`step-${step-1}`).classList.add('active');
-    updateProgress(step - 1);
-};
+    document.getElementById(`step-${step}`).classList.remove('active')
+    document.getElementById(`step-${step-1}`).classList.add('active')
+    updateProgress(step - 1)
+}
 
 function updateProgress(step) {
     document.querySelectorAll('.step-indicator').forEach(el => {
-        el.classList.remove('active');
-        if(parseInt(el.dataset.step) === step) el.classList.add('active');
-    });
+        el.classList.remove('active')
+        if(parseInt(el.dataset.step) === step) el.classList.add('active')
+    })
 }
 
 function setupInputMasks() {
-    const phoneInput = document.getElementById('phone');
-    const plateInput = document.getElementById('license-plate');
+    let phoneInput = document.getElementById('phone')
+    let plateInput = document.getElementById('license-plate')
     if(phoneInput) {
-        phoneInput.addEventListener('focus', () => { if(!phoneInput.value) phoneInput.value = "+31 6 "; });
+        phoneInput.addEventListener('focus', () => { if(!phoneInput.value) phoneInput.value = "+31 6 " })
         phoneInput.addEventListener('input', (e) => {
-            let val = phoneInput.value;
-            if(!val.startsWith("+31 6 ")) phoneInput.value = "+31 6 " + val.replace(/\D/g,'').replace(/^316/,'');
-            const prefix = "+31 6 ";
-            const numbers = val.substring(prefix.length).replace(/[^0-9]/g, '');
-            phoneInput.value = prefix + numbers.substring(0, 8); 
-        });
+            let val = phoneInput.value
+            if(!val.startsWith("+31 6 ")) phoneInput.value = "+31 6 " + val.replace(/\D/g,'').replace(/^316/,'')
+            let prefix = "+31 6 "
+            let numbers = val.substring(prefix.length).replace(/[^0-9]/g, '')
+            phoneInput.value = prefix + numbers.substring(0, 8) 
+        })
     }
     if(plateInput) {
         plateInput.addEventListener('input', (e) => {
-            let val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-            if(val.length > 6) val = val.substring(0, 6);
-            e.target.value = val;
-        });
+            let val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '')
+            if(val.length > 6) val = val.substring(0, 6)
+            e.target.value = val
+        })
     }
 }
 
 function validateContactForm() {
-    let isValid = true;
-    document.querySelectorAll('.input-group input').forEach(i => i.style.borderColor = 'rgba(255,255,255,0.1)');
-    const requiredIds = ['first-name', 'last-name', 'email', 'phone', 'license-plate'];
-    if(bookingData.customerType === 'business') requiredIds.push('company-name', 'vat-number', 'kvk-number');
+    let isValid = true
+    document.querySelectorAll('.input-group input').forEach(i => i.style.borderColor = 'rgba(255,255,255,0.1)')
+    let requiredIds = ['first-name', 'last-name', 'email', 'phone', 'license-plate']
+    if(bookingData.customerType === 'business') requiredIds.push('company-name', 'vat-number', 'kvk-number')
     requiredIds.forEach(id => {
-        const el = document.getElementById(id);
+        let el = document.getElementById(id)
         if(!el.value.trim()) {
-            el.style.borderColor = '#FF0000';
-            isValid = false;
+            el.style.borderColor = '#FF0000'
+            isValid = false
         }
-    });
-    return isValid;
+    })
+    return isValid
 }
 
 window.setCustomerType = function(type, btn) {
-    document.querySelectorAll('.type-option').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    bookingData.customerType = type;
-    document.querySelectorAll('.business-field').forEach(f => f.style.display = type === 'business' ? 'block' : 'none');
-};
+    document.querySelectorAll('.type-option').forEach(b => b.classList.remove('active'))
+    btn.classList.add('active')
+    bookingData.customerType = type
+    document.querySelectorAll('.business-field').forEach(f => f.style.display = type === 'business' ? 'block' : 'none')
+}
 
 function generateReview() {
-    document.getElementById('review-car').innerText = `${bookingData.car.brand} ${bookingData.car.model} (${bookingData.car.year || '?'})`;
-    document.getElementById('review-total').innerText = "Op aanvraag";
+    document.getElementById('review-car').innerText = `${bookingData.car.brand} ${bookingData.car.model} (${bookingData.car.year || '?'})`
+    document.getElementById('review-total').innerText = "Op aanvraag"
     
-    const contactHtml = `${document.getElementById('first-name').value} ${document.getElementById('last-name').value} <br> ${document.getElementById('email').value} <br> ${document.getElementById('phone').value} <br> Kenteken: ${document.getElementById('license-plate').value}`;
-    document.getElementById('review-contact').innerHTML = contactHtml;
+    let contactHtml = `${document.getElementById('first-name').value} ${document.getElementById('last-name').value} <br> ${document.getElementById('email').value} <br> ${document.getElementById('phone').value} <br> Kenteken: ${document.getElementById('license-plate').value}`
+    document.getElementById('review-contact').innerHTML = contactHtml
     
-    const list = document.getElementById('review-services-list');
-    list.innerHTML = '';
+    let list = document.getElementById('review-services-list')
+    list.innerHTML = ''
     bookingData.selectedServices.forEach(srvId => {
-        list.innerHTML += `<li>${serviceOptionsDB[srvId].title}</li>`;
-    });
+        list.innerHTML += `<li>${serviceOptionsDB[srvId].title}</li>`
+    })
 }
 
 window.submitBooking = async function() {
-    const btn = document.querySelector('.btn-finish');
-    const originalText = btn.innerText;
+    let btn = document.querySelector('.btn-finish')
+    let originalText = btn.innerText
     
-    btn.innerText = "Verwerken...";
-    btn.style.opacity = "0.7";
-    btn.disabled = true;
-    document.body.style.cursor = 'wait';
+    btn.innerText = "Verwerken..."
+    btn.style.opacity = "0.7"
+    btn.disabled = true
+    document.body.style.cursor = 'wait'
 
-    let servicesFormatted = "";
+    let servicesFormatted = ""
     if (bookingData.selectedServices.length > 0) {
         bookingData.selectedServices.forEach(srvId => {
-            servicesFormatted += `• ${serviceOptionsDB[srvId].title}\n`;
-        });
+            servicesFormatted += `• ${serviceOptionsDB[srvId].title}\n`
+        })
     } else { 
-        servicesFormatted = "Geen diensten geselecteerd"; 
+        servicesFormatted = "Geen diensten geselecteerd" 
     }
 
     const formData = {
@@ -407,41 +407,41 @@ window.submitBooking = async function() {
         "GEKOZEN DIENSTEN": servicesFormatted,
         "TOTAALPRIJS": "Op aanvraag (Te bespreken)",
         "DATUM AANVRAAG": new Date().toLocaleString('nl-NL')
-    };
+    }
 
     if(bookingData.customerType === 'business') {
-        formData["BEDRIJFSNAAM"] = document.getElementById('company-name').value || "-";
-        formData["BTW NUMMER"] = document.getElementById('vat-number').value || "-";
+        formData["BEDRIJFSNAAM"] = document.getElementById('company-name').value || "-"
+        formData["BTW NUMMER"] = document.getElementById('vat-number').value || "-"
     }
 
     try {
-        const emailOwner = "danildovgop@gmail.com"; 
+        let emailOwner = "danildovgop@gmail.com" 
         
-        const response = await fetch(`https://formsubmit.co/ajax/${emailOwner}`, {
+        let response = await fetch(`https://formsubmit.co/ajax/${emailOwner}`, {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json", 
                 "Accept": "application/json" 
             },
             body: JSON.stringify(formData)
-        });
+        })
 
         if (response.ok) {
-            document.getElementById('step-5').classList.remove('active');
-            document.getElementById('step-success').classList.add('active');
-            document.querySelector('.progress-bar-wrapper').style.display = 'none';
-            window.scrollTo(0, 0);
+            document.getElementById('step-5').classList.remove('active')
+            document.getElementById('step-success').classList.add('active')
+            document.querySelector('.progress-bar-wrapper').style.display = 'none'
+            window.scrollTo(0, 0)
         } else { 
-            throw new Error("Server error"); 
+            throw new Error("Server error") 
         }
 
     } catch (error) {
-        console.error(error);
-        alert("Fout bij verzenden. Probeer later opnieuw.");
-        btn.innerText = originalText;
-        btn.disabled = false;
-        btn.style.opacity = "1";
+        console.error(error)
+        alert("Fout bij verzenden. Probeer later opnieuw.")
+        btn.innerText = originalText
+        btn.disabled = false
+        btn.style.opacity = "1"
     } finally { 
-        document.body.style.cursor = 'default'; 
+        document.body.style.cursor = 'default' 
     }
-};
+}
