@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camar Garage</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans:regular,500,600,700,800" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="./img/logo-camarGarage.png">
+    <link rel="stylesheet" href="./CSS/hamburgers.css">
+    <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="./CSS/style.css">
+
+    <style>
+        body {
+            background-color: #050505;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .settings-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 10%;
+            padding-right: 20px;
+            padding-bottom: 20vh;
+        }
+        .access-card {
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 25px;
+            max-width: 380px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .access-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .access-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background-color: #FF0000;
+        }
+
+        .icon-box {
+            width: 36px; height: 36px;
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid #333; border-radius: 4px;
+            display: flex; justify-content: center; align-items: center;
+            color: #FF0000;
+        }
+        .icon-box svg { width: 18px; height: 18px; }
+
+        .card-content { width: 100%; }
+        .card-title {
+            color: #fff; font-size: 15px; font-weight: 700; margin: 0 0 6px 0;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .card-desc { color: #888; font-size: 13px; margin: 0; line-height: 1.5; }
+
+        .verify-btn {
+            background-color: #FF0000; color: #fff; border: none;
+            padding: 10px 15px; border-radius: 4px; font-weight: 700; font-size: 11px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1px;
+            transition: all 0.3s ease; width: 100%; text-align: center;
+        }
+        .verify-btn:hover { background-color: #cc0000; }
+
+        @media (max-width: 768px) {
+            .settings-wrapper { justify-content: center; padding: 20px; padding-bottom: 10vh; }
+            .access-card { max-width: 100%; }
+        }
+
+        .login-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.95); backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: all 0.4s ease;
+        }
+        .login-overlay.active { opacity: 1; visibility: visible; }
+
+        .login-box {
+            background: #111; 
+            padding: 50px 40px;
+            border-radius: 12px; 
+            border: 1px solid #333;
+            text-align: center; 
+            width: 90%; 
+            max-width: 500px;
+            transform: scale(0.95); transition: transform 0.3s;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+        .login-overlay.active .login-box { transform: scale(1); }
+
+        .login-input {
+            width: 100%; 
+            padding: 16px;
+            background: #050505; 
+            border: 1px solid #333;
+            color: #fff; 
+            text-align: center; 
+            margin-bottom: 20px;
+            border-radius: 6px; 
+            outline: none;
+            font-size: 16px;
+        }
+        .login-input:focus { border-color: #FF0000; }
+
+        .password-wrapper { position: relative; width: 100%; margin-bottom: 20px; }
+        .password-wrapper .login-input { margin-bottom: 0; padding-right: 45px; padding-left: 45px; }
+        
+        .toggle-password-btn {
+            position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+            background: transparent; border: none; color: #666; cursor: pointer;
+            padding: 5px; display: flex; align-items: center; justify-content: center;
+        }
+        .toggle-password-btn svg { width: 20px; height: 20px; }
+        .toggle-password-btn:hover { color: #fff; }
+
+        .login-submit {
+            width: 100%; 
+            padding: 16px;
+            background: #fff; 
+            color: #000;
+            border: none; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            border-radius: 6px;
+            font-size: 14px;
+            letter-spacing: 2px; 
+            transition: 0.3s; 
+            margin-top: 10px;
+        }
+        .login-submit:hover { background: #FF0000; color: #fff; }
+
+        .close-btn {
+            position: absolute; top: 15px; right: 20px; color: #666; cursor: pointer; 
+            background: none; border: none; font-size: 28px;
+        }
+        .error-msg { color: #FF0000; font-size: 14px; margin-top: 20px; display: none; }
+
+        input::-ms-reveal, input::-ms-clear { display: none; }
+        input::-webkit-credentials-auto-fill-button { visibility: hidden; pointer-events: none; position: absolute; right: 0; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-10px); }
+            40% { transform: translateX(10px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body ontouchstart="">
+
+    <header class="top-header">
+    <div class="header-left">
+        <div class="menu-wrapper" onclick="toggleMenu()">
+            <div class="hamburger hamburger--arrowturn">
+                <div class="hamburger-box">
+                    <div class="hamburger-inner"></div>
+                </div>
+            </div>
+            <span class="menu-text">MENU</span>
+        </div>
+        </div>
+    
+    <a href="index.html" class="header-logo-center">
+        <img src="./img/logo-camarGarage.png" alt="Camar Garage Logo">
+    </a>
+    
+    </header>
+
+    <div class="mobile-nav">
+        <a href="index.html" class="mobile-nav-logo">
+            <img src="./img/logo-camarGarage.png" alt="Camar Garage Logo">
+        </a>
+
+        <ul class="nav-list">
+            <li><a href="index.html" class="nav-item">Home</a></li>
+            <li><a href="services.html" class="nav-item">Services</a></li>
+            <li><a href="contact.html" class="nav-item">Contact</a></li>
+        </ul>
+    </div>
+
+    <div class="settings-wrapper">
+        <div class="access-card">
+            <div class="icon-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">Administrator Modus</h3>
+                <p class="card-desc">
+                    Beheer projecten en systeeminstellingen. Toegang uitsluitend voor geautoriseerd personeel.
+                </p>
+            </div>
+            <button class="verify-btn" onclick="openLogin()">Open Admin Mode</button>
+        </div>
+    </div>
+
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box" id="loginBox">
+            <button class="close-btn" onclick="closeLogin()">×</button>
+            
+            <h2 style="color:#fff; margin:0 0 30px 0; font-size:24px; text-transform:uppercase; letter-spacing:3px; font-weight:800;">Admin Access</h2>
+            
+            <input type="email" id="adminEmail" class="login-input" placeholder="E-mailadres" onkeypress="handleEnter(event)" autocomplete="off">
+            
+            <div class="password-wrapper">
+                <input type="password" id="adminPass" class="login-input" placeholder="Wachtwoord" onkeypress="handleEnter(event)" autocomplete="new-password">
+                <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility()">
+                    <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </button>
+            </div>
+            
+            <button class="login-submit" onclick="checkLogin()">Inloggen</button>
+            <p class="error-msg" id="errorMsg">Onjuiste gegevens.</p>
+        </div>
+    </div>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const mobileNav = document.querySelector('.mobile-nav');
+        
+        function toggleMenu() {
+            if(hamburger) hamburger.classList.toggle('is-active');
+            if(mobileNav) mobileNav.classList.toggle('is-open');
+        }
+
+        const SECURE_EMAIL = "bW9jLmtvb2x0dW9Ac3VyYW1vZHJlcGNhaw=="; 
+        const SECURE_PASS = "OFdLI0AzaTI3aA==";         
+
+        function checkCredentials(email, pass) {
+            try {
+                const safeEmail = email.trim().toLowerCase(); 
+                const safePass = pass.trim(); 
+
+                const inputEmailHash = btoa(safeEmail.split('').reverse().join(''));
+                const inputPassHash = btoa(safePass.split('').reverse().join(''));
+                
+                return inputEmailHash === SECURE_EMAIL && inputPassHash === SECURE_PASS;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        const overlay = document.getElementById('loginOverlay');
+        const loginBox = document.getElementById('loginBox');
+        const emailInput = document.getElementById('adminEmail');
+        const passInput = document.getElementById('adminPass');
+        const errorMsg = document.getElementById('errorMsg');
+
+        function openLogin() {
+            overlay.classList.add('active');
+            setTimeout(() => {
+                emailInput.value = '';
+                passInput.value = '';
+                errorMsg.style.display = 'none';
+                emailInput.focus();
+            }, 100);
+        }
+
+        function closeLogin() {
+            overlay.classList.remove('active');
+            emailInput.blur();
+            passInput.blur();
+        }
+
+        function checkLogin() {
+            const email = emailInput.value;
+            const password = passInput.value;
+
+            if (checkCredentials(email, password)) {
+                sessionStorage.setItem('isLogged', 'true');
+                window.location.href = 'admin.html';
+            } else {
+                showError();
+            }
+        }
+
+        function showError() {
+            errorMsg.style.display = 'block';
+            loginBox.style.animation = 'none';
+            loginBox.offsetHeight; 
+            loginBox.style.animation = 'shake 0.4s ease-in-out';
+            passInput.value = '';
+            emailInput.value = '';
+            emailInput.focus();
+        }
+
+        function togglePasswordVisibility() {
+            const icon = document.getElementById('eye-icon');
+            if (passInput.type === "password") {
+                passInput.type = "text";
+                icon.style.stroke = "#fff";
+                icon.innerHTML = `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>`;
+            } else {
+                passInput.type = "password";
+                icon.style.stroke = "currentColor";
+                icon.innerHTML = `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>`;
+            }
+            passInput.focus();
+        }
+
+        function handleEnter(e) {
+            if (e.key === 'Enter') checkLogin();
+        }
+
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeLogin();
+        });
+    </script>
+</body>
+</html>

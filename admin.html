@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Camar Garage Admin</title>
+    <link rel="stylesheet" href="./main.css">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans:regular,500,600,700,800" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="./img/logo-camarGarage.png">
+    
+    <style>
+        * { box-sizing: border-box; }
+        
+        body { 
+            background: #0b0b0b; color: #fff; font-family: 'Google Sans', sans-serif; 
+            margin: 0; padding: 20px; -webkit-font-smoothing: antialiased;
+        }
+
+        .admin-wrapper { max-width: 1200px; margin: 0 auto; }
+
+        .header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 20px; 
+            flex-wrap: wrap; gap: 20px;
+        }
+        h1 { margin: 0; color: #fff; text-transform: uppercase; font-size: 24px; letter-spacing: 1px; }
+        h1 span { color: #FF0000; }
+        .btn-outline { color: #bbb; text-decoration: none; border: 1px solid #333; padding: 10px 20px; border-radius: 6px; transition: 0.3s; font-size: 14px; font-weight: 600; }
+        .btn-outline:hover { border-color: #fff; color: #fff; }
+
+        .admin-panel { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        @media (min-width: 900px) { .admin-panel { grid-template-columns: 400px 1fr; align-items: start; } }
+
+        .form-box, .list-box { background: #151515; padding: 25px; border-radius: 12px; border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        h3 { margin-top: 0; margin-bottom: 20px; font-size: 18px; border-left: 3px solid #FF0000; padding-left: 10px; text-transform: uppercase; }
+
+        label { display: block; margin-bottom: 8px; color: #888; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-top: 20px; }
+        label:first-child { margin-top: 0; }
+        input[type="text"], select, textarea { width: 100%; padding: 14px; background: #0b0b0b; border: 1px solid #333; color: #fff; border-radius: 6px; outline: none; font-family: inherit; font-size: 14px; transition: border-color 0.3s; }
+        input[type="text"]:focus, select:focus, textarea:focus { border-color: #FF0000; }
+        input[type="file"] { width: 100%; padding: 10px; background: #1a1a1a; border-radius: 6px; color: #ccc; font-size: 12px; }
+
+        .btn-group { display: flex; gap: 10px; margin-top: 25px; }
+        .btn-preview { flex: 1; padding: 14px; background: #222; border: none; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 6px; font-size: 12px; transition: 0.3s; }
+        .btn-preview:hover { background: #333; }
+        .btn-add { flex: 2; padding: 14px; background: #FF0000; border: none; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 6px; font-size: 12px; transition: 0.3s; }
+        .btn-add:hover { background: #cc0000; }
+        .btn-add:disabled { background: #444; color: #888; cursor: not-allowed; }
+
+        .list-box { max-height: 80vh; overflow-y: auto; }
+        .list-box::-webkit-scrollbar { width: 6px; }
+        .list-box::-webkit-scrollbar-track { background: #111; }
+        .list-box::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+        .project-item { display: flex; align-items: center; background: #0b0b0b; padding: 12px; margin-bottom: 12px; border-radius: 8px; justify-content: space-between; border: 1px solid #222; transition: 0.2s; }
+        .project-item:hover { border-color: #444; }
+        .item-info { display: flex; align-items: center; gap: 15px; overflow: hidden; }
+        .thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; background: #222; flex-shrink: 0; }
+        .thumb-video { display: flex; justify-content: center; align-items: center; font-size: 24px; color: #FF0000; border: 1px solid #333; }
+        .item-text b { display: block; font-size: 15px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+        .item-text span { font-size: 12px; color: #666; text-transform: uppercase; font-weight: 700; }
+        .btn-del { background: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.2); color: #FF0000; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 6px; font-weight: bold; flex-shrink: 0; transition: 0.3s; }
+        .btn-del:hover { background: #FF0000; color: #fff; }
+
+        .loader { display: none; text-align: center; margin-top: 15px; color: #FF0000; font-weight: bold; font-size: 13px; text-transform: uppercase; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+
+        #preview-area { margin-top: 30px; padding-top: 20px; border-top: 1px dashed #333; display: none; }
+        .project-card { width: 100%; aspect-ratio: 4/3; position: relative; border-radius: 8px; overflow: hidden; border: 1px solid #333; background: #000; }
+        .project-image, .project-video { width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
+        .project-image { background-size: cover; background-position: center; }
+        .project-video { object-fit: cover; }
+        .project-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 20px; display: flex; flex-direction: column; justify-content: flex-end; z-index: 10; }
+        
+        @media (max-width: 600px) {
+            .header { justify-content: center; text-align: center; flex-direction: column; }
+            .item-text b { max-width: 140px; }
+            body { padding-bottom: 70px; } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="admin-wrapper">
+        <div class="header">
+            <h1>Admin <span>Dashboard</span></h1>
+            <a href="index.html" class="btn-outline">← Terug naar Website</a>
+        </div>
+
+        <div class="admin-panel">
+            <div class="form-box">
+                <h3>Nieuw Project</h3>
+                
+                <label>1. Kies Foto of Video (tot 100MB)</label>
+                <input type="file" id="p-file" accept="image/*, video/*">
+                
+                <label>2. Naam Auto</label>
+                <input type="text" id="p-name" placeholder="Bijv. Audi RS6 C8">
+                
+                <label>3. Categorie</label>
+                <select id="p-cat">
+                    <option value="Performance">Performance</option>
+                    <option value="Detailing">Detailing</option>
+                    <option value="Restauratie">Restauratie</option>
+                    <option value="Exhaust">Exhaust</option>
+                    <option value="Upgrades">Upgrades</option>
+                    <option value="Bodykits">Bodykits</option>
+                    <option value="Ambient Light">Ambient Light</option>
+                    <option value="Wraps">Wraps</option>
+                </select>
+                
+                <label>4. Beschrijving</label>
+                <textarea id="p-desc" rows="4" placeholder="Korte beschrijving van het project..."></textarea>
+                
+                <div class="btn-group">
+                    <button class="btn-preview" onclick="showPreview()">👁 Preview</button>
+                    <button class="btn-add" id="addBtn" onclick="addItem()">Publiceren</button>
+                </div>
+                
+                <div class="loader" id="loader">Even geduld...</div>
+
+                <div id="preview-area">
+                    <label style="margin-bottom:10px; display:block;">Preview:</label>
+                    <div id="card-preview-container"></div>
+                </div>
+            </div>
+
+            <div class="list-box">
+                <h3>Online Database</h3>
+                <div id="project-list">
+                    <div style="text-align:center; padding:20px; color:#666;">Laden...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="JS/config.js"></script>
+    
+    <script>
+        if(!sessionStorage.getItem('isLogged')) window.location.href = 'settings.html';
+
+        const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dyekxkgwl/auto/upload"; 
+        const CLOUDINARY_PRESET = "camar_garage";
+
+        let projectsData = [];
+
+        async function loadData() {
+            try {
+                const res = await fetch(`https://api.github.com/gists/${API_CONFIG.GIST_ID}`, {
+                    headers: { 'Authorization': `token ${API_CONFIG.TOKEN}` }
+                });
+                if (!res.ok) throw new Error("GitHub connect error");
+                
+                const data = await res.json();
+                const rawUrl = data.files['projects.json'].raw_url;
+                const rawRes = await fetch(rawUrl);
+                projectsData = await rawRes.json();
+                
+                renderList();
+            } catch (err) {
+                console.error(err);
+                document.getElementById('project-list').innerHTML = "<p style='text-align:center;color:#666'>Lijst is leeg of kan niet laden.</p>";
+                projectsData = []; 
+            }
+        }
+
+        async function saveData() {
+            const btn = document.getElementById('addBtn');
+            const loader = document.getElementById('loader');
+            
+            try {
+                await fetch(`https://api.github.com/gists/${API_CONFIG.GIST_ID}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `token ${API_CONFIG.TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        files: {
+                            'projects.json': { content: JSON.stringify(projectsData) }
+                        }
+                    })
+                });
+                alert("Succesvol opgeslagen!");
+                clearForm();
+            } catch (err) {
+                alert("Fout bij opslaan! Controleer internet.");
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                loader.style.display = 'none';
+                renderList();
+            }
+        }
+
+        async function uploadMediaToCloudinary(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('upload_preset', CLOUDINARY_PRESET);
+
+            const res = await fetch(CLOUDINARY_URL, {
+                method: 'POST',
+                body: formData
+            });
+
+            if(!res.ok) {
+                throw new Error("Fout bij uploaden media naar server.");
+            }
+
+            const data = await res.json();
+            return data.secure_url; // Це і є готове пряме посилання на відео/фото
+        }
+
+        async function showPreview() {
+            const fileInput = document.getElementById('p-file');
+            const name = document.getElementById('p-name').value || "Project Naam";
+            const cat = document.getElementById('p-cat').value;
+            const desc = document.getElementById('p-desc').value || "Beschrijving...";
+            
+            let mediaHTML = '';
+
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const tempUrl = URL.createObjectURL(file); 
+                
+                if (file.type.startsWith('video/')) {
+                    mediaHTML = `<video class="project-video" src="${tempUrl}" autoplay loop muted playsinline></video>`;
+                } else {
+                    mediaHTML = `<div class="project-image" style="background-image: url('${tempUrl}');"></div>`;
+                }
+            } else {
+                mediaHTML = `<div class="project-image" style="background-image: url('https://via.placeholder.com/400x300?text=No+Media');"></div>`;
+            }
+
+            const html = `
+                <div class="project-card">
+                    ${mediaHTML}
+                    <div class="project-overlay">
+                        <div style="color:#fff; z-index: 20; position: relative;">
+                            <span style="color:#FF0000;font-weight:800;font-size:12px;text-transform:uppercase;display:block;margin-bottom:5px;">${cat}</span>
+                            <h3 style="margin:0 0 10px 0;font-size:24px;border:none;padding:0;">${name}</h3>
+                            <p style="font-size:14px;opacity:0.9;margin:0;">${desc}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('card-preview-container').innerHTML = html;
+            document.getElementById('preview-area').style.display = 'block';
+        }
+
+        async function addItem() {
+            const fileInput = document.getElementById('p-file');
+            const name = document.getElementById('p-name').value;
+            const cat = document.getElementById('p-cat').value;
+            const desc = document.getElementById('p-desc').value;
+
+            if(!name || !desc || fileInput.files.length === 0) return alert("Vul alle velden in en kies een bestand!");
+
+            const file = fileInput.files[0];
+            const btn = document.getElementById('addBtn');
+            const loader = document.getElementById('loader');
+
+            btn.disabled = true;
+            
+            try {
+                if (file.type.startsWith('video/')) {
+                    loader.innerText = "VIDEO UPLOADEN (DIT KAN EVEN DUREN)...";
+                } else {
+                    loader.innerText = "FOTO UPLOADEN...";
+                }
+                loader.style.display = 'block';
+
+                const finalMediaUrl = await uploadMediaToCloudinary(file);
+
+                const newItem = {
+                    id: Date.now(),
+                    name: name,
+                    category: cat,
+                    desc: desc,
+                    image: finalMediaUrl // Зберігаємо прямий лінк, а не важкий Base64
+                };
+
+                projectsData.unshift(newItem);
+                
+                loader.innerText = "OPSLAAN NAAR DATABASE...";
+                saveData();
+
+            } catch (error) {
+                loader.style.display = 'none';
+                btn.disabled = false;
+                alert(error);
+            }
+        }
+
+        function renderList() {
+            const list = document.getElementById('project-list');
+            list.innerHTML = '';
+            if (!projectsData || projectsData.length === 0) { 
+                list.innerHTML = '<p style="text-align:center;color:#666">Nog geen projecten.</p>'; 
+                return; 
+            }
+
+            projectsData.forEach((p, index) => {
+                const isVideo = p.image && p.image.match(/\.(mp4|webm|mov|mkv)$/i);
+                
+                const thumbHtml = isVideo 
+                    ? `<div class="thumb thumb-video">▶</div>` 
+                    : `<img src="${p.image}" class="thumb">`;
+
+                list.innerHTML += `
+                    <div class="project-item">
+                        <div class="item-info">
+                            ${thumbHtml}
+                            <div class="item-text">
+                                <b>${p.name}</b>
+                                <span>${p.category}</span>
+                            </div>
+                        </div>
+                        <button class="btn-del" onclick="deleteItem(${index})">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function clearForm() {
+            document.getElementById('p-name').value = '';
+            document.getElementById('p-desc').value = '';
+            document.getElementById('p-file').value = '';
+            document.getElementById('preview-area').style.display = 'none';
+        }
+
+        function deleteItem(index) {
+            if(confirm("Weet je zeker dat je dit project wilt verwijderen?")) {
+                projectsData.splice(index, 1);
+                saveData();
+            }
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

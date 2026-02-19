@@ -1,0 +1,14 @@
+@import url(https://fonts.googleapis.com/css?family=Google+Sans:regular,500,600,700,italic,500italic,600italic,700italic);
+
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    list-style: none;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Google Sans', sans-serif;
+    scrollbar-color: rgb(201, 201, 201) rgb(13, 13, 13);
+    -webkit-tap-highlight-color: transparent; 
+}

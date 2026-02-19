@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camar Garage</title>
+    <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="./CSS/hamburgers.css">
+    <link rel="stylesheet" href="./CSS/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans:regular,500,600,700,800" rel="stylesheet" />
+<link rel="icon" type="image/png" href="./img/logo-camarGarage.png">
+</head>
+<body ontouchstart="">
+
+    <div id="preloader">
+        <div class="loader-logo">CAMAR <span>GARAGE</span></div>
+    </div>
+
+    <header class="top-header">
+    <div class="header-left">
+        <div class="menu-wrapper" onclick="toggleMenu()">
+            <div class="hamburger hamburger--arrowturn">
+                <div class="hamburger-box">
+                    <div class="hamburger-inner"></div>
+                </div>
+            </div>
+            <span class="menu-text">MENU</span>
+        </div>
+        
+        <a href="services.html" class="nav-link" style="color: #FF0000;">Services</a>
+    </div>
+
+    <a href="index.html" class="header-logo-center">
+        <img src="./img/logo-camarGarage.png" alt="Camar Garage Logo">
+    </a>
+
+    <div class="header-right">
+        <a href="./contact.html" class="nav-link" id="h-contact" style="margin-right: 50px;">Contact</a>
+        <a href="booking.html" class="btn-book-now">
+            <span>Boek Nu</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </a>
+    </div>
+</header>
+
+    <div class="mobile-nav">
+        <a href="index.html" class="mobile-nav-logo">
+            <img src="./img/logo-camarGarage.png" alt="Camar Garage Logo">
+        </a>
+
+        <ul class="nav-list">
+            <li><a href="index.html" class="nav-item">Home</a></li>
+            <li><a href="services.html" class="nav-item" style="color: #FF0000;">Services</a></li>
+            <li><a href="./contact.html" class="nav-item">Contact</a></li>
+            <li><a href="settings.html" class="nav-item">Settings</a></li>
+        </ul>
+        <div class="nav-footer">Camar Garage</div>
+    </div>
+
+    <section class="services-page-wrapper">
+        
+        <div class="page-header-block">
+            <h1 class="page-main-title">ONZE DIENSTEN</h1>
+            <p class="page-sub-text">Premium upgrades voor uw voertuig. Kies uw service.</p>
+        </div>
+
+        <div class="services-grid-container">
+            
+            <div class="srv-grid-card" data-service="ambient">
+                <div class="srv-card-bg" style="background-image: url('./img/ambient-light.jpg');"></div>
+                <div class="srv-badge">Instant Booking</div>
+                <div class="srv-card-overlay">
+                    <h3 class="srv-card-title">Ambient Light</h3>
+                    <div class="srv-tags">
+                        <span class="srv-tag">1 Dag</span>
+                        <span class="srv-tag">€299 - €599</span>
+                    </div>
+                    <div class="srv-click-hint">
+                        Bekijk Details <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </div>
+                </div>
+                <a href="./contact.html" class="srv-card-link"></a>
+            </div>
+
+            <div class="srv-grid-card" data-service="tuning">
+                <div class="srv-card-bg" style="background-image: url('./img/chip-tuning.jpg');"></div>
+                <div class="srv-badge">Populair</div>
+                <div class="srv-card-overlay">
+                    <h3 class="srv-card-title">Chip Tuning</h3>
+                    <div class="srv-tags">
+                        <span class="srv-tag">Verschilt per project</span>
+                        <span class="srv-tag">€599 - €899</span>
+                    </div>
+                    <div class="srv-click-hint">
+                        Bekijk Details <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </div>
+                </div>
+                <a href="./contact.html" class="srv-card-link"></a>
+            </div>
+
+            <div class="srv-grid-card" data-service="bodykits">
+                <div class="srv-card-bg" style="background-image: url('./img/bodykits.jpg');"></div>
+                <div class="srv-badge">Custom</div>
+                <div class="srv-card-overlay">
+                    <h3 class="srv-card-title">Bodykits</h3>
+                    <div class="srv-tags">
+                        <span class="srv-tag">3-5 Dagen</span>
+                        <span class="srv-tag">Op aanvraag</span>
+                    </div>
+                    <div class="srv-click-hint">
+                        Bekijk Details <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </div>
+                </div>
+                <a href="./contact.html" class="srv-card-link"></a>
+            </div>
+
+            <div class="srv-grid-card" data-service="starroof">
+                <div class="srv-card-bg" style="background-image: url('./img/starroof.jpg');"></div>
+                <div class="srv-badge">Exclusive</div>
+                <div class="srv-card-overlay">
+                    <h3 class="srv-card-title">Starroof</h3>
+                    <div class="srv-tags">
+                        <span class="srv-tag">4 Dagen</span>
+                        <span class="srv-tag">€1299 - €2499</span>
+                    </div>
+                    <div class="srv-click-hint">
+                        Bekijk Details <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </div>
+                </div>
+                <a href="./contact.html" class="srv-card-link"></a>
+            </div>
+
+            <div class="srv-grid-card" data-service="rims">
+                <div class="srv-card-bg" style="background-image: url('./img/rim-painting.jpg');"></div>
+                <div class="srv-badge">Instant Booking</div>
+                <div class="srv-card-overlay">
+                    <h3 class="srv-card-title">Rim Painting</h3>
+                    <div class="srv-tags">
+                        <span class="srv-tag">1-2 Dagen</span>
+                        <span class="srv-tag">€700</span>
+                    </div>
+                    <div class="srv-click-hint">
+                        Bekijk Details <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                    </div>
+                </div>
+                <a href="./contact.html" class="srv-card-link"></a>
+            </div>
+
+            <div class="srv-grid-card" data-service="wraps">
+    <div class="srv-card-bg" style="background-image: url('./img/wraps.jpg');"></div>
+    <div class="srv-badge">Styling</div>
+    <div class="srv-card-overlay">
+        <h3 class="srv-card-title">Vehicle Wraps</h3>
+        <div class="srv-tags">
+            <span class="srv-tag">3-5 Dagen</span>
+            <span class="srv-tag">Op aanvraag</span>
+        </div>
+        <div class="srv-click-hint">
+            Bekijk Details <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        </div>
+    </div>
+    <a href="./contact.html" class="srv-card-link"></a>
+</div>
+
+<div class="srv-grid-card" data-service="seatbelts">
+    <div class="srv-card-bg" style="background-image: url('./img/seatbelts.jpg');"></div>
+    <div class="srv-badge">Interior</div>
+    <div class="srv-card-overlay">
+        <h3 class="srv-card-title">Custom Seatbelts</h3>
+        <div class="srv-tags">
+            <span class="srv-tag">1 Dag</span>
+            <span class="srv-tag">€399 - €699</span>
+        </div>
+        <div class="srv-click-hint">
+            Bekijk Details <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        </div>
+    </div>
+    <a href="./contact.html" class="srv-card-link"></a>
+</div>
+
+<div class="srv-grid-card" data-service="upholstery">
+    <div class="srv-card-bg" style="background-image: url('./img/interior-upholstery.jpg');"></div>
+    <div class="srv-badge">Luxury</div>
+    <div class="srv-card-overlay">
+        <h3 class="srv-card-title">Interior Upholstery</h3>
+        <div class="srv-tags">
+            <span class="srv-tag">1-3 Weken</span>
+            <span class="srv-tag">Op aanvraag</span>
+        </div>
+        <div class="srv-click-hint">
+            Bekijk Details <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        </div>
+    </div>
+    <a href="./contact.html" class="srv-card-link"></a>
+</div>
+
+<div class="srv-grid-card" data-service="calipers">
+    <div class="srv-card-bg" style="background-image: url('./img/brake-calipers.jpg');"></div>
+    <div class="srv-badge">Detailing</div>
+    <div class="srv-card-overlay">
+        <h3 class="srv-card-title">Brake Calipers</h3>
+        <div class="srv-tags">
+            <span class="srv-tag">1-2 Dagen</span>
+            <span class="srv-tag">€499 - €899</span>
+        </div>
+        <div class="srv-click-hint">
+            Bekijk Details <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        </div>
+    </div>
+    <a href="./contact.html" class="srv-card-link"></a>
+</div>
+
+<div class="srv-grid-card" data-service="steering">
+    <div class="srv-card-bg" style="background-image: url('./img/steering-wheels.jpg');"></div>
+    <div class="srv-badge">Performance</div>
+    <div class="srv-card-overlay">
+        <h3 class="srv-card-title">Steering Wheels</h3>
+        <div class="srv-tags">
+            <span class="srv-tag">Verschilt per project</span>
+            <span class="srv-tag">Op aanvraag</span>
+        </div>
+        <div class="srv-click-hint">
+            Bekijk Details <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        </div>
+    </div>
+    <a href="./contact.html" class="srv-card-link"></a>
+</div>
+
+<div class="srv-grid-card" data-service="parts">
+    <div class="srv-card-bg" style="background-image: url('./img/parts-installation.jpg');"></div>
+    <div class="srv-badge">Workshop</div>
+    <div class="srv-card-overlay">
+        <h3 class="srv-card-title">Parts Installation</h3>
+        <div class="srv-tags">
+            <span class="srv-tag">Verschilt per project</span>
+            <span class="srv-tag">Op aanvraag</span>
+        </div>
+        <div class="srv-click-hint">
+            Bekijk Details <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        </div>
+    </div>
+    <a href="./contact.html" class="srv-card-link"></a>
+</div>
+
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+
+                <div class="footer-col brand-col">
+                    <h2 class="footer-logo">CAMAR <span>GARAGE</span></h2>
+                    <p class="footer-tagline">Transforming cars into statements of power and personality.</p>
+
+                    <div class="footer-contact-info">
+                        <a href="mailto:info@camargarage.nl" class="contact-link">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            info@camargarage.nl
+                        </a>
+                        <a href="tel:+31600000000" class="contact-link">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                            </svg>
+                            +31 6 00 00 00 00 
+                        </a>
+                    </div>
+
+                    <a href="https://wa.me/31600000000" class="whatsapp-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                        WhatsApp
+                    </a>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-heading">Navigatie</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="booking.html" style="color: #FF0000;">Boek Nu</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-heading">Onze Diensten</h3>
+                    <ul class="footer-links">
+                        <li><a href="services.html">Chip Tuning</a></li>
+                        <li><a href="services.html">Ambient Light</a></li>
+                        <li><a href="services.html">Bodykits</a></li>
+                        <li><a href="services.html">Starroof</a></li>
+                        <li><a href="services.html">Rim Painting</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3 class="footer-heading">Openingstijden</h3>
+                    <ul class="footer-hours">
+                        <li><span>Ma - Vr</span> <span>09:00 - 18:00</span></li>
+                        <li><span>Zaterdag</span> <span>10:00 - 17:00</span></li>
+                        <li><span>Zondag</span> <span style="color:#FF0000">Gesloten</span></li>
+                    </ul>
+
+                    <h3 class="footer-heading" style="margin-top:20px">Locatie</h3>
+                    <p class="footer-address">
+                        Lorem, ipsum.<br> 0000 XX Amsterdam<br>
+                        Nederland
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Camar Garage. All rights reserved.</p>
+                <div class="footer-bottom-links">
+                    <a href="#" id="backToTop">Back to Top ↑</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="service-modal" class="modal-backdrop">
+        <div class="modal-container">
+            <button class="modal-close-btn">&times;</button>
+            <div class="modal-content">
+                <div class="modal-image-wrapper">
+                    <div id="modal-img" class="modal-img"></div>
+                </div>
+                <div class="modal-details">
+                    <span id="modal-badge" class="modal-badge">Premium</span>
+                    <h2 id="modal-title" class="modal-title">Service</h2>
+                    <p id="modal-price" class="modal-price">€000</p>
+                    <p id="modal-desc" class="modal-desc">Description...</p>
+                    <div class="modal-features-block">
+                        <h3>Wat is inbegrepen?</h3>
+                        <ul id="modal-features" class="modal-features-list"></ul>
+                    </div>
+                    <div class="modal-actions">
+                        <a href="booking.html" class="btn-modal-book">Boek Nu</a>
+                        <button class="btn-modal-back" id="close-modal-btn">Ga Terug</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./JS/script.js"></script>
+</body>
+</html>
