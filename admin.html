@@ -146,15 +146,22 @@
 
         async function loadData() {
             try {
-                let res = await fetch(`https://api.github.com/gists/${API_CONFIG.GIST_ID}`, {
-                    headers: { 'Authorization': `token ${API_CONFIG.TOKEN}` }
+                let res = await fetch(`https://api.github.com/gists/${API_CONFIG.GIST_ID}?t=${Date.now()}`, {
+                    headers: { 'Authorization': `token ${API_CONFIG.TOKEN}` },
+                    cache: 'no-store'
                 });
                 if (!res.ok) throw new Error("GitHub connect error");
                 
                 let data = await res.json();
-                let rawUrl = data.files['projects.json'].raw_url;
-                let rawRes = await fetch(rawUrl);
-                projectsData = await rawRes.json();
+                const fileContent = data.files['projects.json'].content;
+                
+                if (data.files['projects.json'].truncated) {
+                    let rawUrl = data.files['projects.json'].raw_url + `?t=${Date.now()}`;
+                    let rawRes = await fetch(rawUrl, { cache: 'no-store' });
+                    projectsData = await rawRes.json();
+                } else {
+                    projectsData = JSON.parse(fileContent);
+                }
                 
                 renderList();
             } catch (err) {
