@@ -415,7 +415,7 @@ window.submitBooking = async function() {
     }
 
     try {
-        let emailOwner = "danildovgop@gmail.com" 
+        let emailOwner = "kacperdomarus@outlook.com" 
         
         let response = await fetch(`https://formsubmit.co/ajax/${emailOwner}`, {
             method: "POST",
