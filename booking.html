@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,14 +10,15 @@
     <link rel="stylesheet" href="./CSS/style.css">
     <link rel="stylesheet" href="./CSS/booking.css">
     <link href="https://fonts.googleapis.com/css?family=Google+Sans:regular,500,600,700,800" rel="stylesheet" />
-<link rel="icon" type="image/png" href="./img/logo-camarGarage.png">
+    <link rel="icon" type="image/png" href="./img/logo-camarGarage.png">
 </head>
+
 <body class="booking-page-body">
 
     <header class="booking-header">
         <a href="index.html" class="booking-logo">
-    <img src="./img/logo-camarGarage.png" alt="Camar Garage">
-</a>
+            <img src="./img/logo-camarGarage.png" alt="Camar Garage">
+        </a>
         <a href="index.html" class="close-booking">
             <span class="close-text">Annuleren</span>
             <span class="close-icon">✕</span>
@@ -24,7 +26,7 @@
     </header>
 
     <div class="booking-container">
-        
+
         <div class="progress-bar-wrapper">
             <div class="step-indicator active" data-step="1"><span>01</span> Auto</div>
             <div class="step-indicator" data-step="2"><span>02</span> Diensten</div>
@@ -34,18 +36,18 @@
         </div>
 
         <form id="bookingForm" class="booking-form">
-            
+
             <div class="form-step active" id="step-1">
                 <div class="step-header">
                     <h2 class="step-title">Selecteer Voertuig</h2>
                     <p class="step-subtitle">Begin met het kiezen van uw merk en model.</p>
                 </div>
-                
+
                 <div class="configurator-wrapper">
-                    
+
                     <div class="config-section" id="section-brand">
                         <label class="config-label">MERK</label>
-                        
+
                         <div class="brand-pills">
                             <div class="brand-pill" onclick="selectBrand('Audi', this)">AUDI</div>
                             <div class="brand-pill" onclick="selectBrand('BMW', this)">BMW</div>
@@ -56,7 +58,9 @@
                         </div>
 
                         <div class="input-container">
-                            <input type="text" id="brand-search" class="config-input" placeholder="Of typ een ander merk..." onkeyup="filterBrandList(this)" onfocus="showBrandList()">
+                            <input type="text" id="brand-search" class="config-input"
+                                placeholder="Of typ een ander merk..." onkeyup="filterBrandList(this)"
+                                onfocus="showBrandList()">
                             <div class="input-icon">🔍</div>
                             <div class="config-dropdown" id="brand-dropdown"></div>
                         </div>
@@ -65,7 +69,9 @@
                     <div class="config-section disabled" id="section-model">
                         <label class="config-label">MODEL</label>
                         <div class="input-container">
-                            <input type="text" id="model-search" class="config-input" placeholder="Selecteer eerst een merk" disabled onkeyup="filterModelList(this)" onclick="showModelList()" onfocus="showModelList()">
+                            <input type="text" id="model-search" class="config-input"
+                                placeholder="Selecteer eerst een merk" disabled onkeyup="filterModelList(this)"
+                                onclick="showModelList()" onfocus="showModelList()">
                             <div class="input-icon" id="model-icon">🚗</div>
                             <div class="config-dropdown" id="model-dropdown"></div>
                         </div>
@@ -92,12 +98,14 @@
                     <h2 class="step-title">Kies uw upgrades</h2>
                     <p class="step-subtitle">Selecteer één of meerdere diensten.</p>
                 </div>
-                
+
                 <div class="services-visual-grid">
                     <div class="service-visual-card" data-value="ambient" onclick="toggleService(this)">
                         <div class="svc-bg" style="background-image: url('./img/ambient-light.jpg');"></div>
                         <div class="svc-overlay">
-                            <div class="svc-check-circle"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                            <div class="svc-check-circle"><svg viewBox="0 0 24 24">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                </svg></div>
                             <div class="svc-info">
                                 <h3>Ambient Light</h3>
                                 <span>€299 - €599</span>
@@ -108,7 +116,9 @@
                     <div class="service-visual-card" data-value="tuning" onclick="toggleService(this)">
                         <div class="svc-bg" style="background-image: url('./img/chip-tuning.jpg');"></div>
                         <div class="svc-overlay">
-                            <div class="svc-check-circle"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                            <div class="svc-check-circle"><svg viewBox="0 0 24 24">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                </svg></div>
                             <div class="svc-info">
                                 <h3>Chip Tuning</h3>
                                 <span>€599 - €899</span>
@@ -119,7 +129,9 @@
                     <div class="service-visual-card" data-value="bodykits" onclick="toggleService(this)">
                         <div class="svc-bg" style="background-image: url('./img/bodykits.jpg');"></div>
                         <div class="svc-overlay">
-                            <div class="svc-check-circle"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                            <div class="svc-check-circle"><svg viewBox="0 0 24 24">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                </svg></div>
                             <div class="svc-info">
                                 <h3>Bodykits</h3>
                                 <span>Op aanvraag</span>
@@ -130,7 +142,9 @@
                     <div class="service-visual-card" data-value="starroof" onclick="toggleService(this)">
                         <div class="svc-bg" style="background-image: url('./img/starroof.jpg');"></div>
                         <div class="svc-overlay">
-                            <div class="svc-check-circle"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                            <div class="svc-check-circle"><svg viewBox="0 0 24 24">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                </svg></div>
                             <div class="svc-info">
                                 <h3>Starroof</h3>
                                 <span>€1299 - €2499</span>
@@ -141,7 +155,9 @@
                     <div class="service-visual-card" data-value="rims" onclick="toggleService(this)">
                         <div class="svc-bg" style="background-image: url('./img/rim-painting.jpg');"></div>
                         <div class="svc-overlay">
-                            <div class="svc-check-circle"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                            <div class="svc-check-circle"><svg viewBox="0 0 24 24">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                </svg></div>
                             <div class="svc-info">
                                 <h3>Rim Painting</h3>
                                 <span>€700</span>
@@ -152,7 +168,9 @@
                     <div class="service-visual-card" data-value="wraps" onclick="toggleService(this)">
                         <div class="svc-bg" style="background-image: url('./img/wraps.jpg');"></div>
                         <div class="svc-overlay">
-                            <div class="svc-check-circle"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                            <div class="svc-check-circle"><svg viewBox="0 0 24 24">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                </svg></div>
                             <div class="svc-info">
                                 <h3>Vehicle Wraps</h3>
                                 <span>Op aanvraag</span>
@@ -163,7 +181,9 @@
                     <div class="service-visual-card" data-value="seatbelts" onclick="toggleService(this)">
                         <div class="svc-bg" style="background-image: url('./img/seatbelts.jpg');"></div>
                         <div class="svc-overlay">
-                            <div class="svc-check-circle"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                            <div class="svc-check-circle"><svg viewBox="0 0 24 24">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                </svg></div>
                             <div class="svc-info">
                                 <h3>Custom Seatbelts</h3>
                                 <span>€399 - €699</span>
@@ -174,7 +194,9 @@
                     <div class="service-visual-card" data-value="upholstery" onclick="toggleService(this)">
                         <div class="svc-bg" style="background-image: url('./img/interior-upholstery.jpg');"></div>
                         <div class="svc-overlay">
-                            <div class="svc-check-circle"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                            <div class="svc-check-circle"><svg viewBox="0 0 24 24">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                </svg></div>
                             <div class="svc-info">
                                 <h3>Interior</h3>
                                 <span>Op aanvraag</span>
@@ -185,7 +207,9 @@
                     <div class="service-visual-card" data-value="calipers" onclick="toggleService(this)">
                         <div class="svc-bg" style="background-image: url('./img/brake-calipers.jpg');"></div>
                         <div class="svc-overlay">
-                            <div class="svc-check-circle"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                            <div class="svc-check-circle"><svg viewBox="0 0 24 24">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                </svg></div>
                             <div class="svc-info">
                                 <h3>Brake Calipers</h3>
                                 <span>€499 - €899</span>
@@ -196,7 +220,9 @@
                     <div class="service-visual-card" data-value="steering" onclick="toggleService(this)">
                         <div class="svc-bg" style="background-image: url('./img/steering-wheels.jpg');"></div>
                         <div class="svc-overlay">
-                            <div class="svc-check-circle"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                            <div class="svc-check-circle"><svg viewBox="0 0 24 24">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                </svg></div>
                             <div class="svc-info">
                                 <h3>Steering Wheels</h3>
                                 <span>Op aanvraag</span>
@@ -207,7 +233,9 @@
                     <div class="service-visual-card" data-value="parts" onclick="toggleService(this)">
                         <div class="svc-bg" style="background-image: url('./img/parts-installation.jpg');"></div>
                         <div class="svc-overlay">
-                            <div class="svc-check-circle"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+                            <div class="svc-check-circle"><svg viewBox="0 0 24 24">
+                                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                                </svg></div>
                             <div class="svc-info">
                                 <h3>Parts Installation</h3>
                                 <span>Op aanvraag</span>
@@ -227,9 +255,9 @@
                     <h2 class="step-title">Configureer Details</h2>
                     <p class="step-subtitle">Kies de specificaties voor uw geselecteerde diensten.</p>
                 </div>
-                
+
                 <div id="dynamic-options-container" class="options-container">
-                    </div>
+                </div>
 
                 <div class="total-price-bar">
                     <span>Geschatte Totaalprijs:</span>
@@ -311,12 +339,12 @@
                         <h3><span class="icon">🚗</span> Voertuig</h3>
                         <p id="review-car" class="review-data">Loading...</p>
                     </div>
-                    
+
                     <div class="review-section">
                         <h3><span class="icon">🛠️</span> Configuraties</h3>
                         <ul id="review-services-list" class="review-list"></ul>
                     </div>
-                    
+
                     <div class="review-section total-section">
                         <h3>Totaal (Indicatie)</h3>
                         <p id="review-total" class="review-total-price">€0</p>
@@ -338,8 +366,8 @@
                 <div class="success-content">
                     <div class="checkmark-circle">
                         <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
                         </svg>
                     </div>
                     <h2>Aanvraag Verzonden!</h2>
@@ -354,4 +382,5 @@
     <script src="./JS/script.js"></script>
     <script src="./JS/booking.js"></script>
 </body>
+
 </html>

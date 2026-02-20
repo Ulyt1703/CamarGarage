@@ -1,84 +1,384 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Camar Garage Admin</title>
     <link rel="stylesheet" href="./main.css">
     <link href="https://fonts.googleapis.com/css?family=Google+Sans:regular,500,600,700,800" rel="stylesheet" />
     <link rel="icon" type="image/png" href="./img/logo-camarGarage.png">
-    
+
     <style>
-        * { box-sizing: border-box; }
-        
-        body { 
-            background: #0b0b0b; color: #fff; font-family: 'Google Sans', sans-serif; 
-            margin: 0; padding: 20px; -webkit-font-smoothing: antialiased;
+        * {
+            box-sizing: border-box;
         }
 
-        .admin-wrapper { max-width: 1200px; margin: 0 auto; }
-
-        .header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 20px; 
-            flex-wrap: wrap; gap: 20px;
+        body {
+            background: #0b0b0b;
+            color: #fff;
+            font-family: 'Google Sans', sans-serif;
+            margin: 0;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
         }
-        h1 { margin: 0; color: #fff; text-transform: uppercase; font-size: 24px; letter-spacing: 1px; }
-        h1 span { color: #FF0000; }
-        .btn-outline { color: #bbb; text-decoration: none; border: 1px solid #333; padding: 10px 20px; border-radius: 6px; transition: 0.3s; font-size: 14px; font-weight: 600; }
-        .btn-outline:hover { border-color: #fff; color: #fff; }
 
-        .admin-panel { display: grid; grid-template-columns: 1fr; gap: 30px; }
-        @media (min-width: 900px) { .admin-panel { grid-template-columns: 400px 1fr; align-items: start; } }
+        .admin-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-        .form-box, .list-box { background: #151515; padding: 25px; border-radius: 12px; border: 1px solid #222; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        h3 { margin-top: 0; margin-bottom: 20px; font-size: 18px; border-left: 3px solid #FF0000; padding-left: 10px; text-transform: uppercase; }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #222;
+            padding-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
 
-        label { display: block; margin-bottom: 8px; color: #888; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-top: 20px; }
-        label:first-child { margin-top: 0; }
-        input[type="text"], select, textarea { width: 100%; padding: 14px; background: #0b0b0b; border: 1px solid #333; color: #fff; border-radius: 6px; outline: none; font-family: inherit; font-size: 14px; transition: border-color 0.3s; }
-        input[type="text"]:focus, select:focus, textarea:focus { border-color: #FF0000; }
-        input[type="file"] { width: 100%; padding: 10px; background: #1a1a1a; border-radius: 6px; color: #ccc; font-size: 12px; }
+        h1 {
+            margin: 0;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
 
-        .btn-group { display: flex; gap: 10px; margin-top: 25px; }
-        .btn-preview { flex: 1; padding: 14px; background: #222; border: none; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 6px; font-size: 12px; transition: 0.3s; }
-        .btn-preview:hover { background: #333; }
-        .btn-add { flex: 2; padding: 14px; background: #FF0000; border: none; color: #fff; font-weight: bold; cursor: pointer; text-transform: uppercase; border-radius: 6px; font-size: 12px; transition: 0.3s; }
-        .btn-add:hover { background: #cc0000; }
-        .btn-add:disabled { background: #444; color: #888; cursor: not-allowed; }
+        h1 span {
+            color: #FF0000;
+        }
 
-        .list-box { max-height: 80vh; overflow-y: auto; }
-        .list-box::-webkit-scrollbar { width: 6px; }
-        .list-box::-webkit-scrollbar-track { background: #111; }
-        .list-box::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        .btn-outline {
+            color: #bbb;
+            text-decoration: none;
+            border: 1px solid #333;
+            padding: 10px 20px;
+            border-radius: 6px;
+            transition: 0.3s;
+            font-size: 14px;
+            font-weight: 600;
+        }
 
-        .project-item { display: flex; align-items: center; background: #0b0b0b; padding: 12px; margin-bottom: 12px; border-radius: 8px; justify-content: space-between; border: 1px solid #222; transition: 0.2s; }
-        .project-item:hover { border-color: #444; }
-        .item-info { display: flex; align-items: center; gap: 15px; overflow: hidden; }
-        .thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; background: #222; flex-shrink: 0; }
-        .thumb-video { display: flex; justify-content: center; align-items: center; font-size: 24px; color: #FF0000; border: 1px solid #333; }
-        .item-text b { display: block; font-size: 15px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
-        .item-text span { font-size: 12px; color: #666; text-transform: uppercase; font-weight: 700; }
-        .btn-del { background: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.2); color: #FF0000; width: 36px; height: 36px; display: flex; justify-content: center; align-items: center; cursor: pointer; border-radius: 6px; font-weight: bold; flex-shrink: 0; transition: 0.3s; }
-        .btn-del:hover { background: #FF0000; color: #fff; }
+        .btn-outline:hover {
+            border-color: #fff;
+            color: #fff;
+        }
 
-        .loader { display: none; text-align: center; margin-top: 15px; color: #FF0000; font-weight: bold; font-size: 13px; text-transform: uppercase; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        .admin-panel {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
 
-        #preview-area { margin-top: 30px; padding-top: 20px; border-top: 1px dashed #333; display: none; }
-        .project-card { width: 100%; aspect-ratio: 4/3; position: relative; border-radius: 8px; overflow: hidden; border: 1px solid #333; background: #000; }
-        .project-image, .project-video { width: 100%; height: 100%; position: absolute; top: 0; left: 0; }
-        .project-image { background-size: cover; background-position: center; }
-        .project-video { object-fit: cover; }
-        .project-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 60%); padding: 20px; display: flex; flex-direction: column; justify-content: flex-end; z-index: 10; }
-        
+        @media (min-width: 900px) {
+            .admin-panel {
+                grid-template-columns: 400px 1fr;
+                align-items: start;
+            }
+        }
+
+        .form-box,
+        .list-box {
+            background: #151515;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #222;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 18px;
+            border-left: 3px solid #FF0000;
+            padding-left: 10px;
+            text-transform: uppercase;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #888;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+
+        label:first-child {
+            margin-top: 0;
+        }
+
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 14px;
+            background: #0b0b0b;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 6px;
+            outline: none;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #FF0000;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            background: #1a1a1a;
+            border-radius: 6px;
+            color: #ccc;
+            font-size: 12px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .btn-preview {
+            flex: 1;
+            padding: 14px;
+            background: #222;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            border-radius: 6px;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+
+        .btn-preview:hover {
+            background: #333;
+        }
+
+        .btn-add {
+            flex: 2;
+            padding: 14px;
+            background: #FF0000;
+            border: none;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            border-radius: 6px;
+            font-size: 12px;
+            transition: 0.3s;
+        }
+
+        .btn-add:hover {
+            background: #cc0000;
+        }
+
+        .btn-add:disabled {
+            background: #444;
+            color: #888;
+            cursor: not-allowed;
+        }
+
+        .list-box {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .list-box::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .list-box::-webkit-scrollbar-track {
+            background: #111;
+        }
+
+        .list-box::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+
+        .project-item {
+            display: flex;
+            align-items: center;
+            background: #0b0b0b;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            justify-content: space-between;
+            border: 1px solid #222;
+            transition: 0.2s;
+        }
+
+        .project-item:hover {
+            border-color: #444;
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            overflow: hidden;
+        }
+
+        .thumb {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #222;
+            flex-shrink: 0;
+        }
+
+        .thumb-video {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #FF0000;
+            border: 1px solid #333;
+        }
+
+        .item-text b {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+        }
+
+        .item-text span {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .btn-del {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            color: #FF0000;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: bold;
+            flex-shrink: 0;
+            transition: 0.3s;
+        }
+
+        .btn-del:hover {
+            background: #FF0000;
+            color: #fff;
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+            color: #FF0000;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.6;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.6;
+            }
+        }
+
+        #preview-area {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #333;
+            display: none;
+        }
+
+        .project-card {
+            width: 100%;
+            aspect-ratio: 4/3;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #333;
+            background: #000;
+        }
+
+        .project-image,
+        .project-video {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .project-image {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .project-video {
+            object-fit: cover;
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, transparent 60%);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            z-index: 10;
+        }
+
         @media (max-width: 600px) {
-            .header { justify-content: center; text-align: center; flex-direction: column; }
-            .item-text b { max-width: 140px; }
-            body { padding-bottom: 70px; } 
+            .header {
+                justify-content: center;
+                text-align: center;
+                flex-direction: column;
+            }
+
+            .item-text b {
+                max-width: 140px;
+            }
+
+            body {
+                padding-bottom: 70px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="admin-wrapper">
@@ -90,13 +390,13 @@
         <div class="admin-panel">
             <div class="form-box">
                 <h3>Nieuw Project</h3>
-                
+
                 <label>1. Kies Foto of Video (tot 100MB)</label>
                 <input type="file" id="p-file" accept="image/*, video/*">
-                
+
                 <label>2. Naam Auto</label>
                 <input type="text" id="p-name" placeholder="Bijv. Audi RS6 C8">
-                
+
                 <label>3. Categorie</label>
                 <select id="p-cat">
                     <option value="Performance">Performance</option>
@@ -108,15 +408,15 @@
                     <option value="Ambient Light">Ambient Light</option>
                     <option value="Wraps">Wraps</option>
                 </select>
-                
+
                 <label>4. Beschrijving</label>
                 <textarea id="p-desc" rows="4" placeholder="Korte beschrijving van het project..."></textarea>
-                
+
                 <div class="btn-group">
                     <button class="btn-preview" onclick="showPreview()">👁 Preview</button>
                     <button class="btn-add" id="addBtn" onclick="addItem()">Publiceren</button>
                 </div>
-                
+
                 <div class="loader" id="loader">Even geduld...</div>
 
                 <div id="preview-area">
@@ -135,11 +435,11 @@
     </div>
 
     <script src="JS/config.js"></script>
-    
-    <script>
-        if(!sessionStorage.getItem('isLogged')) window.location.href = 'settings.html';
 
-        const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dyekxkgwl/auto/upload"; 
+    <script>
+        if (!sessionStorage.getItem('isLogged')) window.location.href = 'settings.html';
+
+        const CLOUDINARY_URL = "https://api.cloudinary.com/v1_1/dyekxkgwl/auto/upload";
         const CLOUDINARY_PRESET = "camar_garage";
 
         let projectsData = [];
@@ -147,30 +447,30 @@
         async function loadData() {
             try {
                 let res = await fetch(`https://api.github.com/gists/${API_CONFIG.GIST_ID}?t=${Date.now()}`, {
-                    headers: { 
+                    headers: {
                         'Accept': 'application/vnd.github.v3+json',
-                        'Authorization': `Bearer ${API_CONFIG.TOKEN}` 
+                        'Authorization': `Bearer ${API_CONFIG.TOKEN}`
                     },
                     cache: 'no-store'
                 });
                 if (!res.ok) throw new Error("GitHub connect error");
-                
+
                 let data = await res.json();
                 let fileContent = data.files['projects.json'].content;
                 projectsData = JSON.parse(fileContent);
-                
+
                 renderList();
             } catch (err) {
                 console.error(err);
                 document.getElementById('project-list').innerHTML = "<p style='text-align:center;color:#666'>Lijst is leeg of kan niet laden.</p>";
-                projectsData = []; 
+                projectsData = [];
             }
         }
 
         async function saveData() {
             let btn = document.getElementById('addBtn');
             let loader = document.getElementById('loader');
-            
+
             btn.disabled = true;
             loader.style.display = 'block';
 
@@ -188,9 +488,9 @@
                         }
                     })
                 });
-                
+
                 if (!res.ok) throw new Error("Save error");
-                
+
                 alert("Succesvol opgeslagen!");
                 clearForm();
             } catch (err) {
@@ -213,7 +513,7 @@
                 body: formData
             });
 
-            if(!res.ok) {
+            if (!res.ok) {
                 throw new Error("Fout bij uploaden media naar server.");
             }
 
@@ -226,13 +526,13 @@
             let name = document.getElementById('p-name').value || "Project Naam";
             let cat = document.getElementById('p-cat').value;
             let desc = document.getElementById('p-desc').value || "Beschrijving...";
-            
+
             let mediaHTML = '';
 
             if (fileInput.files.length > 0) {
                 let file = fileInput.files[0];
-                let tempUrl = URL.createObjectURL(file); 
-                
+                let tempUrl = URL.createObjectURL(file);
+
                 if (file.type.startsWith('video/')) {
                     mediaHTML = `<video class="project-video" src="${tempUrl}" autoplay loop muted playsinline></video>`;
                 } else {
@@ -264,14 +564,14 @@
             let cat = document.getElementById('p-cat').value;
             let desc = document.getElementById('p-desc').value;
 
-            if(!name || !desc || fileInput.files.length === 0) return alert("Vul alle velden in en kies een bestand!");
+            if (!name || !desc || fileInput.files.length === 0) return alert("Vul alle velden in en kies een bestand!");
 
             let file = fileInput.files[0];
             let btn = document.getElementById('addBtn');
             let loader = document.getElementById('loader');
 
             btn.disabled = true;
-            
+
             try {
                 if (file.type.startsWith('video/')) {
                     loader.innerText = "VIDEO UPLOADEN (DIT KAN EVEN DUREN)...";
@@ -291,7 +591,7 @@
                 };
 
                 projectsData.unshift(newItem);
-                
+
                 loader.innerText = "OPSLAAN NAAR DATABASE...";
                 saveData();
 
@@ -305,16 +605,16 @@
         function renderList() {
             let list = document.getElementById('project-list');
             list.innerHTML = '';
-            if (!projectsData || projectsData.length === 0) { 
-                list.innerHTML = '<p style="text-align:center;color:#666">Nog geen projecten.</p>'; 
-                return; 
+            if (!projectsData || projectsData.length === 0) {
+                list.innerHTML = '<p style="text-align:center;color:#666">Nog geen projecten.</p>';
+                return;
             }
 
             projectsData.forEach((p, index) => {
                 let isVideo = p.image && p.image.match(/\.(mp4|webm|mov|mkv)$/i);
-                
-                let thumbHtml = isVideo 
-                    ? `<div class="thumb thumb-video">▶</div>` 
+
+                let thumbHtml = isVideo
+                    ? `<div class="thumb thumb-video">▶</div>`
                     : `<img src="${p.image}" class="thumb">`;
 
                 list.innerHTML += `
@@ -342,7 +642,7 @@
         }
 
         function deleteItem(index) {
-            if(confirm("Weet je zeker dat je dit project wilt verwijderen?")) {
+            if (confirm("Weet je zeker dat je dit project wilt verwijderen?")) {
                 projectsData.splice(index, 1);
                 saveData();
             }
@@ -351,4 +651,5 @@
         loadData();
     </script>
 </body>
+
 </html>
