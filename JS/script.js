@@ -20,28 +20,23 @@ document.addEventListener("DOMContentLoaded", () => {
         if (typeof API_CONFIG === "undefined") return;
 
         try {
-            // Беремо дані напряму через API, використовуючи твій токен
             const res = await fetch(`https://api.github.com/gists/${API_CONFIG.GIST_ID}?t=${Date.now()}`, {
-                headers: { 'Authorization': `token ${API_CONFIG.TOKEN}` },
+                headers: { 
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Authorization': `Bearer ${API_CONFIG.TOKEN}`
+                },
                 cache: "no-store"
-            });
-            let data = await res.json();
+            })
             
-            let projects = [];
-            const fileContent = data.files["projects.json"].content;
+            if (!res.ok) throw new Error("Gist Error: " + res.status)
+            let data = await res.json()
             
-            // Якщо файл завеликий і GitHub його обрізав (truncated), завантажуємо raw-версію
-            if (data.files["projects.json"].truncated) {
-                let rawUrl = data.files["projects.json"].raw_url + `?t=${Date.now()}`;
-                let rawRes = await fetch(rawUrl, { cache: "no-store" });
-                projects = await rawRes.json();
-            } else {
-                projects = JSON.parse(fileContent); // Найсвіжіші дані без кешу
-            }
+            let fileContent = data.files["projects.json"].content
+            let projects = JSON.parse(fileContent)
 
-            renderProjectsSlider(projects);
+            renderProjectsSlider(projects)
         } catch (error) {
-            console.error("Fout bij laden:", error);
+            console.error("Fout bij laden:", error)
             projectSliderContainer.innerHTML = '<p style="padding:20px; text-align:center">Laden mislukt.</p>';
         }
     }

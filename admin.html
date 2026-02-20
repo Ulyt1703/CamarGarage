@@ -147,21 +147,17 @@
         async function loadData() {
             try {
                 let res = await fetch(`https://api.github.com/gists/${API_CONFIG.GIST_ID}?t=${Date.now()}`, {
-                    headers: { 'Authorization': `token ${API_CONFIG.TOKEN}` },
+                    headers: { 
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Authorization': `Bearer ${API_CONFIG.TOKEN}` 
+                    },
                     cache: 'no-store'
                 });
                 if (!res.ok) throw new Error("GitHub connect error");
                 
                 let data = await res.json();
-                const fileContent = data.files['projects.json'].content;
-                
-                if (data.files['projects.json'].truncated) {
-                    let rawUrl = data.files['projects.json'].raw_url + `?t=${Date.now()}`;
-                    let rawRes = await fetch(rawUrl, { cache: 'no-store' });
-                    projectsData = await rawRes.json();
-                } else {
-                    projectsData = JSON.parse(fileContent);
-                }
+                let fileContent = data.files['projects.json'].content;
+                projectsData = JSON.parse(fileContent);
                 
                 renderList();
             } catch (err) {
@@ -175,11 +171,15 @@
             let btn = document.getElementById('addBtn');
             let loader = document.getElementById('loader');
             
+            btn.disabled = true;
+            loader.style.display = 'block';
+
             try {
-                await fetch(`https://api.github.com/gists/${API_CONFIG.GIST_ID}`, {
+                let res = await fetch(`https://api.github.com/gists/${API_CONFIG.GIST_ID}`, {
                     method: 'PATCH',
                     headers: {
-                        'Authorization': `token ${API_CONFIG.TOKEN}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Authorization': `Bearer ${API_CONFIG.TOKEN}`,
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
@@ -188,6 +188,9 @@
                         }
                     })
                 });
+                
+                if (!res.ok) throw new Error("Save error");
+                
                 alert("Succesvol opgeslagen!");
                 clearForm();
             } catch (err) {
@@ -215,7 +218,7 @@
             }
 
             let data = await res.json();
-            return data.secure_url; // Це і є готове пряме посилання на відео/фото
+            return data.secure_url;
         }
 
         async function showPreview() {
